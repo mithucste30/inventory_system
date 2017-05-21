@@ -1,0 +1,17 @@
+version: "2"
+volumes:
+  bundler:
+  mysql:
+
+global: &global
+  - ./vendor/docker/common.env
+
+services:
+
+  app:
+    container_name: inventory_system
+    build: vendor/docker/${RACK_ENV}.dockerfile
+    env_file:
+      - ./vendor/docker/app/variables.env
+
+
