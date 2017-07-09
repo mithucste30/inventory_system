@@ -1,17 +1,44 @@
 version: "2"
 volumes:
   bundler:
-  mysql:
-
-global: &global
-  - ./vendor/docker/common.env
+  mongodb:
+  elasticsearch:
 
 services:
-
   app:
     container_name: inventory_system
-    build: vendor/docker/${RACK_ENV}.dockerfile
+    build:
+      context: .
+      dockerfile: vendor/docker/app/${ENV}.dockerfile
+      args:
+        APP_PATH: $APP_PATH
     env_file:
-      - ./vendor/docker/app/variables.env
+       - vendor/docker/app/common.env
+       - vendor/docker/app/${ENV}.env
+    volumes:
+      - $PWD:$APP_PATH
+      - bundler:$BUNDLE_PATH
+    depends_on:
+      - mongodb
+      - elasticsearch
+    links:
+      - mongodb
+      - elasticsearch
+
+  mongodb:
+    image: mongo:3.4.6
+    volumes:
+      - mongodb:/data/db
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:5.5.0
+    ports:
+      - 9200:9200
+    volumes:
+      - elasticsearch:/usr/share/elasticsearch/data
+    environment:
+      - http.host:0.0.0.0
+
+
 
 
