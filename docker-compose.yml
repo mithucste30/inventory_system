@@ -1,6 +1,5 @@
 version: "2"
 volumes:
-<<<<<<< HEAD
   bundler:
   mongodb:
   elasticsearch:
@@ -39,38 +38,3 @@ services:
       - elasticsearch:/usr/share/elasticsearch/data
     environment:
       - http.host:0.0.0.0
-
-
-
-=======
-  inventory_system_app_bundle:
-  mysql_db_store:
-  app:
-
-
-services:
-  mysql_container:
-    container_name: inventory_system_mysql_container
-    build:
-      context: .
-      dockerfile: vendor/docker/mysql/mysql.development.dockerfile
-    env_file:
-      - vendor/docker/mysql/mysql.development.env
-    volumes:
-      - mysql_db_store:/var/lib/mysql
->>>>>>> 653af00b3e9cc56be9d074a54dcc63259bf74a15
-
-  app_container:
-      container_name: inventory_system_app_container
-      build:
-        context: .
-        dockerfile: vendor/docker/app/app.development.dockerfile
-        args: # build time variables, also available at run time.
-          APP_PATH: /usr/src/app
-      volumes:
-        - $PWD:$APP_PATH
-        - inventory_system_app_bundle:$APP_PATH/vendor/bundle
-      env_file:
-            - vendor/docker/mysql/mysql.development.env
-      links:
-        - mysql_container:mysql # outer_name:inner_name
