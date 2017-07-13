@@ -1,0 +1,7 @@
+<div class="form-group">
+  <%= f.label field.name, :class => 'control-label col-lg-2' %>
+  <div class="col-lg-10">
+    <%= f.text_field field.name, :class => 'form-control', required: field.required %>
+  </div>
+  <%=f.error_span(field.name) %>
+</div>

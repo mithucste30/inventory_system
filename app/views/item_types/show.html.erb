@@ -12,6 +12,9 @@
               item_types_path, :class => 'btn btn-default'  %>
 <%= link_to t('.edit', :default => t("helpers.links.edit")),
               edit_item_type_path(@item_type), :class => 'btn btn-default' %>
+
+<%= link_to 'Add new item',
+            new_item_path(@item_type.id), :class => 'btn btn-default' %>
 <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
               item_type_path(@item_type),
               :method => 'delete',

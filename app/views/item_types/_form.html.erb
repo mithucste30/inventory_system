@@ -23,42 +23,15 @@
     <%=f.error_span(:name) %>
   </div>
 
-  <%= f.nested_fields_for :item_fields do |builder| %>
-    <div class="form-group">
-      <%= builder.label :input_title, :class => 'control-label col-lg-2' %>
-      <div class="col-lg-10">
-        <%= builder.text_field :input_title, :class => 'form-control' %>
-      </div>
-      <%=builder.error_span(:input_title) %>
-    </div>
+    <h3>Item fields</h3>
+    <hr>
+  <%= f.nested_fields_for :input_fields do |builder| %>
 
-    <div class="form-group">
-      <%= builder.label :input_type, :class => 'control-label col-lg-2' %>
-      <div class="col-lg-10">
-        <%= builder.select :input_type, %w(text_field select check_box).collect {|v| [v.titleize, v]}, :class => 'form-control' %>
-      </div>
-      <%=builder.error_span(:input_type) %>
-    </div>
+        <%= render 'item_fields/form', f: builder %>
 
-    <div class="form-group">
-      <%= builder.label :required, :class => 'control-label col-lg-2' %>
-      <div class="col-lg-10">
-        <%= builder.text_field :required, :class => 'form-control' %>
-      </div>
-      <%=builder.error_span(:required) %>
-    </div>
-
-    <div class="form-group">
-      <%= builder.label :input_values, :class => 'control-label col-lg-2' %>
-      <div class="col-lg-10">
-        <%= builder.text_field :input_values_string, value: builder.object.input_values.join(','),  :class => 'form-control' %>
-      </div>
-      <%=builder.error_span(:input_values) %>
-    </div>
-    <%= builder.remove_nested_fields_link 'Remove me' %>
   <% end %>
 
-  <%= f.add_nested_fields_link :item_fields %>
+  <%= f.add_nested_fields_link :input_fields %>
 
 
 

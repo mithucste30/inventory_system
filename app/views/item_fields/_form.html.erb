@@ -1,55 +1,40 @@
-<%= form_for @item_field, :html => { :class => "form-horizontal item_field" } do |f| %>
-
-  <% if @item_field.errors.any? %>
-    <div id="error_expl" class="panel panel-danger">
-      <div class="panel-heading">
-        <h3 class="panel-title"><%= pluralize(@item_field.errors.count, "error") %> prohibited this item_field from being saved:</h3>
-      </div>
-      <div class="panel-body">
-        <ul>
-        <% @item_field.errors.full_messages.each do |msg| %>
-          <li><%= msg %></li>
-        <% end %>
-        </ul>
-      </div>
+<fieldset>
+  <div class="form-group">
+    <%= f.label :title, :class => 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+      <%= f.text_field :name, :class => 'form-control' %>
     </div>
-  <% end %>
+    <%=f.error_span(:title) %>
+  </div>
 
   <div class="form-group">
-    <%= f.label :input_title, :class => 'control-label col-lg-2' %>
+    <%= f.label :type, :class => 'control-label col-lg-2' %>
     <div class="col-lg-10">
-      <%= f.text_field :input_title, :class => 'form-control' %>
+      <%= f.select :type, %w(text_field select check_box date number).collect {|v| [v.titleize, v]},
+                   {class: 'form-control', prompt: 'Please Select One'}, :onChange => 'toggleRequiredFieldVisibility(this)'  %>
     </div>
-    <%=f.error_span(:input_title) %>
+    <%=f.error_span(:type) %>
   </div>
-  <div class="form-group">
-    <%= f.label :input_type, :class => 'control-label col-lg-2' %>
+
+  <div class="form-group input_values_div hidden">
+    <%= f.label :allowed_values, :class => 'control-label col-lg-2' %>
     <div class="col-lg-10">
-      <%= f.text_field :input_type, :class => 'form-control' %>
+      <%= f.text_field :values_string, value: f.object.allowed_values.join(','),  :class => 'form-control', placeholder: 'Separated by (,)', disabled: true %>
     </div>
-    <%=f.error_span(:input_type) %>
+    <%=f.error_span(:values) %>
   </div>
+
   <div class="form-group">
     <%= f.label :required, :class => 'control-label col-lg-2' %>
-    <div class="col-lg-10">
-      <%= f.text_field :required, :class => 'form-control' %>
+    <div class="col-lg-1">
+      <%= f.check_box :required, :class => 'form-control' %>
     </div>
     <%=f.error_span(:required) %>
   </div>
-  <div class="form-group">
-    <%= f.label :input_values, :class => 'control-label col-lg-2' %>
-    <div class="col-lg-10">
-      <%= f.text_field :input_values, :class => 'form-control' %>
-    </div>
-    <%=f.error_span(:input_values) %>
-  </div>
 
-  <div class="form-group">
-    <div class="col-lg-offset-2 col-lg-10">
-      <%= f.submit nil, :class => 'btn btn-primary' %>
-      <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
-                item_fields_path, :class => 'btn btn-default' %>
-    </div>
-  </div>
+  <%= f.remove_nested_fields_link 'Remove item field' %>
+</fieldset>
 
-<% end %>
+<script type="">
+
+</script>
