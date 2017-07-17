@@ -1,5 +1,5 @@
 class ContainersController < ApplicationController
-  before_action :set_container, only: [:show, :edit, :update, :destroy]
+  before_action :set_container, only: [:show, :edit, :update, :destroy, :add_item]
 
   # GET /containers
   # GET /containers.json
@@ -61,14 +61,22 @@ class ContainersController < ApplicationController
     end
   end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_container
-      @container = Container.find(params[:id])
-    end
+  def add_item
+    @item_types = ItemType.all
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def container_params
-      params.require(:container).permit(:name, :image)
+  private
+  # Use callbacks to share common setup or constraints between actions.
+  def set_container
+    begin
+      @container = Container.find(params[:id])
+    rescue
+      redirect_to containers_path
     end
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def container_params
+    params.require(:container).permit(:name, :picture)
+  end
 end

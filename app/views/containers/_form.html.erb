@@ -1,27 +1,45 @@
-<%= form_with(model: container, local: true) do |form| %>
-  <% if container.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(container.errors.count, "error") %> prohibited this container from being saved:</h2>
+<%= form_for @container, :html => { :class => "form-horizontal container" } do |f| %>
 
-      <ul>
-      <% container.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+  <% if @container.errors.any? %>
+    <div id="error_expl" class="panel panel-danger">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= pluralize(@container.errors.count, "error") %> prohibited this container from being saved:</h3>
+      </div>
+      <div class="panel-body">
+        <ul>
+        <% @container.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name, id: :container_name %>
+  <%= f.hidden_field :parent_container_id, value: @container.parent_container_id %>
+
+  <div class="form-group">
+    <%= f.label :name, :class => 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+      <%= f.text_field :name, :class => 'form-control' %>
+    </div>
+    <%=f.error_span(:name) %>
   </div>
 
-  <div class="field">
-    <%= form.label :image %>
-    <%= form.text_field :image, id: :container_image %>
+  <div class="form-group">
+    <%= f.label :picture, :class => 'control-label col-lg-2' %>
+    <%= f.hidden_field(:picture_cache) %>
+    <div class="col-lg-3">
+      <%= f.file_field :picture, :class => 'form-control' %>
+    </div>
+    <%=f.error_span(:picture) %>
   </div>
 
-  <div class="actions">
-    <%= form.submit %>
+  <div class="form-group">
+    <div class="col-lg-offset-2 col-lg-10">
+      <%= f.submit nil, :class => 'btn btn-primary' %>
+      <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                containers_path, :class => 'btn btn-default' %>
+    </div>
   </div>
+
 <% end %>

@@ -1,5 +1,5 @@
-<h1>New Container</h1>
-
-<%= render 'form', container: @container %>
-
-<%= link_to 'Back', containers_path %>
+<%- model_class = Container -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => [:'helpers.titles.new', 'New %{model}'], :model => model_class.model_name.human.titleize %></h1>
+</div>
+<%= render :partial => 'form' %>
